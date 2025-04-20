@@ -52,7 +52,7 @@ while True:
 
     cv2.imshow('Face Capture', frame)
 
-    if time.time() - start_time > 30:
+    if time.time() - start_time > 8:
         break
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
