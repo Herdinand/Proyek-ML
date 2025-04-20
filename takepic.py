@@ -5,6 +5,7 @@ import csv
 
 cap = cv2.VideoCapture(0)
 
+folder = './data/at'
 output_folder = './data/at/Herdinand'
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
@@ -15,7 +16,7 @@ gender = input("Masukkan gender (M/F): ")
 age = input("Masukkan usia: ")
 
 # Prepare CSV
-csv_filename = os.path.join(output_folder, 'features.csv')
+csv_filename = os.path.join(folder, 'features.csv')
 csv_file = open(csv_filename, mode='w', newline='')
 csv_writer = csv.writer(csv_file)
 csv_writer.writerow(['filename', 'ID', 'gender', 'age', 'x', 'y', 'w', 'h', 'timestamp'])

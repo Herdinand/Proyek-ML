@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load data CSV
-csv_path = './data/at/j/features.csv'  # Sesuaikan path kalau berbeda
+csv_path = './data/at/features.csv'  # Sesuaikan path kalau berbeda
 df = pd.read_csv(csv_path)
 
 # Cek beberapa data awal
