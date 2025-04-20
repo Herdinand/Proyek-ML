@@ -15,11 +15,15 @@ user_id = input("Masukkan ID user: ")
 gender = input("Masukkan gender (M/F): ")
 age = input("Masukkan usia: ")
 
-# Prepare CSV
 csv_filename = os.path.join(folder, 'features.csv')
-csv_file = open(csv_filename, mode='w', newline='')
+file_exists = os.path.isfile(csv_filename)
+
+csv_file = open(csv_filename, mode='a', newline='')
 csv_writer = csv.writer(csv_file)
-csv_writer.writerow(['filename', 'ID', 'gender', 'age', 'x', 'y', 'w', 'h', 'timestamp'])
+
+# Tulis header hanya jika file belum ada
+if not file_exists:
+    csv_writer.writerow(['filename', 'ID', 'gender', 'age', 'x', 'y', 'w', 'h', 'timestamp'])
 
 face_cascade = cv2.CascadeClassifier('C:\\Users\\herdi\\Documents\\Proyek ML\\Haar Cascade\\haarcascade_frontalface_default.xml')
 
