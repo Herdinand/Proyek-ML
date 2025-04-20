@@ -5,7 +5,7 @@ import csv
 
 cap = cv2.VideoCapture(0)
 
-output_folder = './data/at/j'
+output_folder = './data/at/Herdinand'
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
