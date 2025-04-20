@@ -1,14 +1,12 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-
-from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
 
 # ===================================
 # Load Data
@@ -31,82 +29,65 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 # ===================================
-# Train Semua Model
+# Train Model (contoh dengan Random Forest)
 # ===================================
-# Logistic Regression
-logreg = LogisticRegression(max_iter=1000)
-logreg.fit(X_train, y_train)
-y_pred_logreg = logreg.predict(X_test)
-
-# Random Forest
 rf = RandomForestClassifier(n_estimators=100)
 rf.fit(X_train, y_train)
-y_pred_rf = rf.predict(X_test)
-
-# SVM
-svm = SVC(kernel='linear')
-svm.fit(X_train, y_train)
-y_pred_svm = svm.predict(X_test)
-
-# KNN
-knn = KNeighborsClassifier(n_neighbors=5)
-knn.fit(X_train, y_train)
-y_pred_knn = knn.predict(X_test)
+y_pred_train = rf.predict(X_train)  # Prediksi pada data pelatihan
+y_pred_test = rf.predict(X_test)    # Prediksi pada data pengujian
 
 # ===================================
-# Evaluasi Semua Model
+# Visualisasi Hasil pada Data Pelatihan
 # ===================================
-# Logistic Regression Evaluation
-print("\n=== Evaluasi Logistic Regression ===")
-print(classification_report(y_test, y_pred_logreg))
+fig, axes = plt.subplots(3, 3, figsize=(10, 10))
+axes = axes.ravel()
 
-# Random Forest Evaluation
-print("\n=== Evaluasi Random Forest ===")
-print(classification_report(y_test, y_pred_rf))
+# Ambil beberapa gambar pelatihan dan tampilkan prediksi
+for i in np.arange(9):
+    ax = axes[i]
+    
+    # Ambil gambar asli dari X_train dan reshape ke bentuk 200x200
+    img = X_train[i].reshape(200, 200)
+    
+    # Tampilkan gambar
+    ax.imshow(img, cmap='gray')
+    
+    # Prediksi ID menggunakan model
+    predicted_label = y_pred_train[i]
+    true_label = y_train[i]
+    
+    # Set judul dengan ID yang diprediksi vs yang sebenarnya
+    ax.set_title(f"Pred: {predicted_label}\nTrue: {true_label}")
+    
+    ax.axis('off')
 
-# SVM Evaluation
-print("\n=== Evaluasi SVM ===")
-print(classification_report(y_test, y_pred_svm))
-
-# KNN Evaluation
-print("\n=== Evaluasi KNN ===")
-print(classification_report(y_test, y_pred_knn))
-
-# ===================================
-# Visualisasi Confusion Matrix untuk Semua Model
-# ===================================
-# Logistic Regression Confusion Matrix
-cm_logreg = confusion_matrix(y_test, y_pred_logreg)
-plt.figure(figsize=(10,8))
-sns.heatmap(cm_logreg, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix Logistic Regression')
-plt.xlabel('Predicted')
-plt.ylabel('True')
+plt.tight_layout()
 plt.show()
 
-# Random Forest Confusion Matrix
-cm_rf = confusion_matrix(y_test, y_pred_rf)
-plt.figure(figsize=(10,8))
-sns.heatmap(cm_rf, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix Random Forest')
-plt.xlabel('Predicted')
-plt.ylabel('True')
-plt.show()
+# ===================================
+# Visualisasi Hasil pada Data Pengujian
+# ===================================
+fig, axes = plt.subplots(3, 3, figsize=(10, 10))
+axes = axes.ravel()
 
-# SVM Confusion Matrix
-cm_svm = confusion_matrix(y_test, y_pred_svm)
-plt.figure(figsize=(10,8))
-sns.heatmap(cm_svm, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix SVM')
-plt.xlabel('Predicted')
-plt.ylabel('True')
-plt.show()
+# Ambil beberapa gambar uji dan tampilkan prediksi
+for i in np.arange(9):
+    ax = axes[i]
+    
+    # Ambil gambar asli dari X_test dan reshape ke bentuk 200x200
+    img = X_test[i].reshape(200, 200)
+    
+    # Tampilkan gambar
+    ax.imshow(img, cmap='gray')
+    
+    # Prediksi ID menggunakan model
+    predicted_label = y_pred_test[i]
+    true_label = y_test[i]
+    
+    # Set judul dengan ID yang diprediksi vs yang sebenarnya
+    ax.set_title(f"Pred: {predicted_label}\nTrue: {true_label}")
+    
+    ax.axis('off')
 
-# KNN Confusion Matrix
-cm_knn = confusion_matrix(y_test, y_pred_knn)
-plt.figure(figsize=(10,8))
-sns.heatmap(cm_knn, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix KNN')
-plt.xlabel('Predicted')
-plt.ylabel('True')
+plt.tight_layout()
 plt.show()
